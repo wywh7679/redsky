@@ -27,3 +27,20 @@ test("accepts only the Redsky PLP search endpoint", () => {
   assert.equal(isPlpSearchUrl("https://example.com/redsky_aggregations/v1/web/plp_search_v2"), false);
   assert.equal(isPlpSearchUrl("not a URL"), false);
 });
+
+test("cleans product bullets without removing variation swatches", () => {
+  const payload = { product: { variation: { swatches: [{ color: "Navy" }] }, product_description: {
+    bullet_descriptors: ["<b>Soft</b> &amp; warm"], soft_bullets: { value: "<p>Machine washable</p>" }
+  } } };
+  const cleaned = utils.cleanProductBullets(payload);
+  assert.deepEqual(cleaned.product.variation.swatches, [{ color: "Navy" }]);
+  assert.deepEqual(cleaned.product.product_description.bullet_descriptors, ["Soft & warm"]);
+  assert.equal(cleaned.product.product_description.soft_bullets.value, "Machine washable");
+  assert.notEqual(cleaned, payload);
+});
+
+test("derives the page number from PLP count and offset", () => {
+  assert.equal(utils.pageNumberFromUrl("https://redsky.target.com/redsky_aggregations/v1/web/plp_search_v2?count=24&offset=0"), 1);
+  assert.equal(utils.pageNumberFromUrl("https://redsky.target.com/redsky_aggregations/v1/web/plp_search_v2?count=24&offset=24"), 2);
+  assert.equal(utils.pageNumberFromUrl("https://redsky.target.com/redsky_aggregations/v1/web/plp_search_v2?count=24&offset=216"), 10);
+});

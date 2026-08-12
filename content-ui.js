@@ -18,7 +18,7 @@
     root.innerHTML = `
       <section class="rfe-panel rfe-hidden" aria-label="Redsky feed exporter">
         <header class="rfe-header"><h2>Redsky Feed Exporter</h2><div class="rfe-status">Waiting for a Redsky response…</div></header>
-        <div class="rfe-toolbar"><button data-action="refresh">Refresh capture</button><button data-action="save" class="rfe-save">Save unmodified JSON</button></div>
+        <div class="rfe-toolbar"><button data-action="refresh">Refresh capture</button><button data-action="save" class="rfe-save">Save JSON</button></div>
         <div class="rfe-items"><div class="rfe-empty">Browse or refresh this Target category page to capture its feed.</div></div>
       </section>
       <button class="rfe-toggle" aria-expanded="false">Redsky (0)</button>`;
@@ -48,7 +48,8 @@
 
   function updateStatus() {
     const total = capture?.items.length || 0;
-    root.querySelector(".rfe-status").textContent = capture ? `Initial response · ${total} items · exported unmodified` : "Waiting for the initial PLP response…";
+    const page = capture ? utils.pageNumberFromUrl(capture.url) : 1;
+    root.querySelector(".rfe-status").textContent = capture ? `Page ${page} · ${total} items` : "Waiting for the initial PLP response…";
     root.querySelector(".rfe-toggle").textContent = `Redsky (${total})`;
   }
 
@@ -81,7 +82,9 @@
   function save() {
     const folder = utils.slugify(categoryName());
     if (!capture) return alert("The initial PLP response has not been captured yet.");
-    const files = [{ filename: `${folder}/page-001.json`, content: JSON.stringify(capture.payload) }];
+    const page = utils.pageNumberFromUrl(capture.url);
+    const filename = `${folder}/page-${String(page).padStart(3, "0")}.json`;
+    const files = [{ filename, content: JSON.stringify(utils.cleanProductBullets(capture.payload)) }];
     chrome.runtime.sendMessage({ type: "download-json", files }, (response) => {
       if (chrome.runtime.lastError || !response?.ok) alert(`Could not save files: ${chrome.runtime.lastError?.message || response?.error || "Unknown error"}`);
     });

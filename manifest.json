@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Redsky Feed Exporter",
+  "version": "1.0.0",
+  "description": "Preview and export the initial Target category Redsky PLP response as JSON.",
+  "permissions": ["downloads", "storage", "tabs"],
+  "host_permissions": [
+    "https://www.target.com/*",
+    "https://redsky.target.com/redsky_aggregations/v1/web/plp_search_v2*"
+  ],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Redsky Feed Exporter"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.target.com/*"],
+      "js": ["lib/url-utils.js", "interceptor-main.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["https://www.target.com/*"],
+      "js": ["lib/feed-utils.js", "content-ui.js"],
+      "css": ["content-ui.css"],
+      "run_at": "document_start"
+    }
+  ]
+}

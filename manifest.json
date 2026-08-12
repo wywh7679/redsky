@@ -4,7 +4,10 @@
   "version": "1.0.0",
   "description": "Preview, select, and export Target category Redsky feed items as JSON.",
   "permissions": ["downloads", "storage", "tabs"],
-  "host_permissions": ["https://www.target.com/*", "https://redsky.target.com/*"],
+  "host_permissions": [
+    "https://www.target.com/*",
+    "https://redsky.target.com/redsky_aggregations/v1/web/plp_search_v2*"
+  ],
   "background": {
     "service_worker": "service-worker.js"
   },
@@ -15,7 +18,7 @@
   "content_scripts": [
     {
       "matches": ["https://www.target.com/*"],
-      "js": ["interceptor-main.js"],
+      "js": ["lib/url-utils.js", "interceptor-main.js"],
       "run_at": "document_start",
       "world": "MAIN"
     },

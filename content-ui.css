@@ -1,0 +1,17 @@
+#redsky-exporter-root { all: initial; position: fixed; z-index: 2147483647; right: 18px; bottom: 18px; font-family: Arial, sans-serif; color: #222; }
+#redsky-exporter-root * { box-sizing: border-box; }
+.rfe-toggle { border: 0; border-radius: 24px; padding: 12px 17px; background: #cc0000; color: #fff; font: 700 14px Arial; box-shadow: 0 3px 14px #0004; cursor: pointer; }
+.rfe-panel { width: min(440px, calc(100vw - 24px)); max-height: min(680px, calc(100vh - 90px)); background: #fff; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 8px 30px #0005; display: flex; flex-direction: column; overflow: hidden; margin-bottom: 10px; }
+.rfe-hidden { display: none !important; }
+.rfe-header { padding: 15px; border-bottom: 1px solid #ddd; }
+.rfe-header h2 { font: 700 18px Arial; margin: 0 0 5px; }
+.rfe-status { font: 12px Arial; color: #666; }
+.rfe-toolbar { display: flex; gap: 8px; padding: 10px 15px; border-bottom: 1px solid #eee; flex-wrap: wrap; }
+.rfe-toolbar button { border: 1px solid #999; border-radius: 5px; background: #fff; padding: 6px 9px; cursor: pointer; font: 12px Arial; }
+.rfe-toolbar .rfe-save { background: #cc0000; border-color: #cc0000; color: white; font-weight: bold; }
+.rfe-items { padding: 8px 15px; overflow-y: auto; min-height: 100px; }
+.rfe-empty { color: #666; padding: 22px 5px; text-align: center; font: 13px/1.4 Arial; }
+.rfe-item { display: grid; grid-template-columns: 24px 54px 1fr; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid #eee; font: 13px/1.3 Arial; }
+.rfe-item img { width: 52px; height: 52px; object-fit: contain; background: #f6f6f6; }
+.rfe-item small { display: block; color: #777; margin-top: 3px; }
+.rfe-batch { font: 700 12px Arial; background: #f5f5f5; padding: 6px 4px; margin-top: 5px; }

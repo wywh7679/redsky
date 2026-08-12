@@ -1,6 +1,6 @@
 # Redsky Feed Exporter
 
-A Manifest V3 Chrome extension that captures JSON responses from Target's Redsky `redsky_aggregations/v1/web/plp_search_v2` feed while you browse category pages. It provides an in-page preview, lets you choose individual products, and downloads each captured feed page to a category folder such as `mens-shoes/page-001.json`.
+A Manifest V3 Chrome extension that captures the initial JSON response from Target's Redsky `redsky_aggregations/v1/web/plp_search_v2` feed while you browse a category page. It provides an in-page product preview and downloads the complete response to a category folder such as `mens-shoes/page-001.json`.
 
 ## Install
 
@@ -11,9 +11,9 @@ A Manifest V3 Chrome extension that captures JSON responses from Target's Redsky
 
 ## Use
 
-The red **Redsky (n)** button appears at the lower-right of Target pages. Browse or scroll until feeds load, open the panel, preview the captured items, and adjust the checkboxes. **Save JSON** creates one file for every captured response that still has selected items. Chrome may ask for permission to download multiple files the first time.
+The red **Redsky (n)** button appears at the lower-right of Target pages. Open the panel to preview products from the initial response, then choose **Save unmodified JSON**. Later pagination or infinite-scroll responses are ignored.
 
-Each file contains the category name, source feed URL, capture timestamp, and the complete original objects for the selected products. Duplicate responses are ignored. Nothing is sent anywhere other than Chrome's local download manager.
+The downloaded file is the endpoint response itself: the extension does not add metadata, select fields, reorder arrays, or wrap the response. Nothing is sent anywhere other than Chrome's local download manager.
 
 > Target can change its private response shape or endpoint. The exporter searches common nested product collections and intentionally ignores every Redsky response except HTTPS requests to `/redsky_aggregations/v1/web/plp_search_v2` on `redsky.target.com`. Query parameters can vary by category, page, store, and visitor.
 

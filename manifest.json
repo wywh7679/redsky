@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Redsky Feed Exporter",
   "version": "1.0.0",
-  "description": "Preview, select, and export Target category Redsky feed items as JSON.",
+  "description": "Preview and export the initial Target category Redsky PLP response as JSON.",
   "permissions": ["downloads", "storage", "tabs"],
   "host_permissions": [
     "https://www.target.com/*",

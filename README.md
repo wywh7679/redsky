@@ -11,7 +11,7 @@ A Manifest V3 Chrome extension that captures the initial JSON response from Targ
 
 ## Use
 
-The red **Redsky (n)** button appears at the lower-right of Target pages. Open the panel to preview products from the initial response, then choose **Save unmodified JSON**. Later pagination or infinite-scroll responses are ignored.
+The red **Redsky (n)** button appears at the lower-right of Target pages. Open the panel to preview products from the initial response, then choose **Save unmodified JSON**. The extension remembers later pagination or infinite-scroll responses without automatically replacing the preview. Select **Refresh capture** to replace the preview with the most recent `plp_search_v2` XHR or fetch response; if no newer request has occurred, it reloads the current captured response.
 
 The downloaded file is the endpoint response itself: the extension does not add metadata, select fields, reorder arrays, or wrap the response. Nothing is sent anywhere other than Chrome's local download manager.
 

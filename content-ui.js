@@ -1,4 +1,5 @@
 (() => {
+  const REFRESH_EVENT_NAME = "redsky-feed-exporter:refresh";
   const utils = globalThis.RedskyFeedUtils;
   let capture = null;
   let root;
@@ -17,7 +18,7 @@
     root.innerHTML = `
       <section class="rfe-panel rfe-hidden" aria-label="Redsky feed exporter">
         <header class="rfe-header"><h2>Redsky Feed Exporter</h2><div class="rfe-status">Waiting for a Redsky response…</div></header>
-        <div class="rfe-toolbar"><button data-action="save" class="rfe-save">Save unmodified JSON</button></div>
+        <div class="rfe-toolbar"><button data-action="refresh">Refresh capture</button><button data-action="save" class="rfe-save">Save unmodified JSON</button></div>
         <div class="rfe-items"><div class="rfe-empty">Browse or refresh this Target category page to capture its feed.</div></div>
       </section>
       <button class="rfe-toggle" aria-expanded="false">Redsky (0)</button>`;
@@ -35,7 +36,14 @@
   function handleAction(event) {
     const action = event.target.dataset.action;
     if (!action) return;
-    if (action === "save") save();
+    if (action === "refresh") refreshCapture();
+    else if (action === "save") save();
+  }
+
+  function refreshCapture() {
+    capture = null;
+    render();
+    window.dispatchEvent(new CustomEvent(REFRESH_EVENT_NAME));
   }
 
   function updateStatus() {
